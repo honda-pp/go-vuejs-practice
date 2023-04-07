@@ -3,7 +3,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 RUN apk add --no-cache git
-RUN npm install -g @vue/cli axios
+RUN npm install -g @vue/cli
 
 COPY . .
 
