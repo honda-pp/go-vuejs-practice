@@ -5,4 +5,4 @@ CREATE TABLE users (
   password_hash CHAR(60) NOT NULL
 );
 
-INSERT INTO users (username, email, password_hash) VALUES ('testuser', 'testuser@example.com', 'password123');
+INSERT INTO users (username, email, password_hash) VALUES ('testuser', 'testuser@example.com', '$2a$10$b6Nk3aziRYO9mVnMGnSSQuI6cj1hyYezlHce1RRbNYY4Tmjlw//Cy');

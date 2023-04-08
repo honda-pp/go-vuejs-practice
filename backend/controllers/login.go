@@ -8,9 +8,14 @@ import (
 	"github.com/honda-pp/go-vuejs-practice/backend/models"
 )
 
+type LoginForm struct {
+	Username string `form:"username"`
+	Password string `form:"password"`
+}
+
 func Login(c *gin.Context) {
 	logger := gin.DefaultWriter
-	var loginForm models.LoginForm
+	var loginForm LoginForm
 	if err := c.ShouldBind(&loginForm); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -22,30 +27,20 @@ func Login(c *gin.Context) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT id, username, email, password_hash FROM users WHERE username = $1 AND password_hash = $2", loginForm.Username, loginForm.Password)
+	user, err := models.GetUser(db, loginForm.Username)
 	if err != nil {
 		logger.Write([]byte(err.Error()))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	defer rows.Close()
 
-	if rows.Next() {
-		var id int
-		var username string
-		var email string
-		var passwordHash string
-		if err := rows.Scan(&id, &username, &email, &passwordHash); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			logger.Write([]byte(err.Error()))
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"message":  "login successful",
-			"id":       strconv.Itoa(id),
-			"username": username,
-		})
-	} else {
+	if err = user.CheckPassword(loginForm.Password); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "failed to login"})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"message":  "login successful",
+		"id":       strconv.Itoa(user.ID),
+		"username": user.Username,
+	})
 }

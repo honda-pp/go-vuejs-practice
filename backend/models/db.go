@@ -29,3 +29,28 @@ func ConnectDB() (*sql.DB, error) {
 
 	return db, nil
 }
+
+func GetUser(db *sql.DB, username string) (User, error) {
+	var user User
+	rows, err := db.Query("SELECT id, username, email, password_hash FROM users WHERE username = $1", username)
+	defer rows.Close()
+	if err != nil {
+		return user, err
+	}
+	if rows.Next() {
+		var id int
+		var username string
+		var email string
+		var passwordHash string
+		if err := rows.Scan(&id, &username, &email, &passwordHash); err != nil {
+			return user, err
+		}
+		user = User{
+			ID:           id,
+			Username:     username,
+			Email:        email,
+			PasswordHash: passwordHash,
+		}
+	}
+	return user, nil
+}
