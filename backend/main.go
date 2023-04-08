@@ -13,6 +13,7 @@ func main() {
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://localhost:88"}
 	config.AllowCredentials = true
+	router.Use(gin.Logger())
 	router.Use(cors.New(config))
 
 	api := router.Group("/api")

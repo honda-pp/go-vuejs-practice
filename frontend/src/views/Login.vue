@@ -18,7 +18,8 @@ export default {
     handleLogin(credentials) {
       axios.post('http://localhost:8080/api/login', credentials)
         .then(response => {
-          console.log(response.data);
+          console.log(response)
+          this.$router.push({ name: 'home' });
         })
         .catch(error => {
           console.error(error)
