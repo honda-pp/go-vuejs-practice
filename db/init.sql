@@ -4,3 +4,5 @@ CREATE TABLE users (
   email VARCHAR(100) NOT NULL UNIQUE,
   password_hash CHAR(60) NOT NULL
 );
+
+INSERT INTO users (username, email, password_hash) VALUES ('testuser', 'testuser@example.com', 'password123');
