@@ -7,6 +7,7 @@
   
 <script>
 import LoginForm from '@/components/LoginForm.vue';
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -15,8 +16,14 @@ export default {
   },
   methods: {
     handleLogin(credentials) {
-      console.log(credentials);
-    },
-  },
+      axios.post('http://localhost:8080/api/login', credentials)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }
 };
 </script>
