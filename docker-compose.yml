@@ -8,7 +8,6 @@ services:
     volumes:
       - ./backend:/app
     command: air
-
   frontend:
     build: ./frontend
     environment:
@@ -19,3 +18,14 @@ services:
       - /app/node_modules
       - ./frontend:/app
     command: npm run serve
+  db:
+    build: ./db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=golang_pass
+      - POSTGRES_USER=golang_usr
+      - POSTGRES_DB=golang_db
