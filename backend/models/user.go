@@ -11,8 +11,8 @@ type User struct {
 	PasswordHash string
 }
 
-func (u *User) HashPassword(password string) error {
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+func (u *User) HashPassword() error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(u.PasswordHash), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}

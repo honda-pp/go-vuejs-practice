@@ -20,14 +20,15 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	db, err := models.ConnectDB()
+
+	db, err := models.NewDB()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	defer db.Close()
 
-	user, err := models.GetUser(db, loginForm.Username)
+	user, err := db.GetUser(loginForm.Username)
 	if err != nil {
 		logger.Write([]byte(err.Error()))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -38,6 +39,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "failed to login"})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "login successful",
 		"id":       strconv.Itoa(user.ID),

@@ -8,7 +8,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func ConnectDB() (*sql.DB, error) {
+type DB struct {
+	*sql.DB
+}
+
+func NewDB() (*DB, error) {
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	user := os.Getenv("DB_USER")
@@ -27,30 +31,17 @@ func ConnectDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	return db, nil
+	return &DB{db}, nil
 }
 
-func GetUser(db *sql.DB, username string) (User, error) {
+func (db *DB) GetUser(username string) (*User, error) {
 	var user User
-	rows, err := db.Query("SELECT id, username, email, password_hash FROM users WHERE username = $1", username)
-	defer rows.Close()
+	row := db.QueryRow("SELECT id, username, email, password_hash FROM users WHERE username = $1", username)
+
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash)
 	if err != nil {
-		return user, err
+		return nil, err
 	}
-	if rows.Next() {
-		var id int
-		var username string
-		var email string
-		var passwordHash string
-		if err := rows.Scan(&id, &username, &email, &passwordHash); err != nil {
-			return user, err
-		}
-		user = User{
-			ID:           id,
-			Username:     username,
-			Email:        email,
-			PasswordHash: passwordHash,
-		}
-	}
-	return user, nil
+
+	return &user, nil
 }
