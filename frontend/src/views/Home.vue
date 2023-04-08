@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     fetchMessage() {
-      axios.get('http://localhost:8080/', { withCredentials: true })
+      axios.get('http://localhost:8080/api/', { withCredentials: true })
         .then(response => {
           this.message = response.data.message
         })
