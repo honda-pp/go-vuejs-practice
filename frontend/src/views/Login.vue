@@ -4,10 +4,11 @@
     <LoginForm v-on:login="handleLogin" />
   </div>
 </template>
-  
+
 <script>
 import { inject } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
+import router from '../router'; // routerをインポートする
 
 export default {
   name: 'Login',
@@ -15,20 +16,22 @@ export default {
     LoginForm,
   },
   setup() {
-    const axios = inject('$axios');
+    const axiosInstance = inject('$axios');
+    const $cookies = inject('$cookies');
 
     const handleLogin = async (credentials) => {
-      console.log("handleLogin")
       try {
-        console.log(credentials)
-        const response = await axios.post('/login', credentials);
+        const response = await axiosInstance.post('/login', credentials);
         console.log(response.data);
-        //this.$router.push({ name: 'home' });
-        //password123
+        $cookies.set('id', response.data.id);
+        $cookies.set('username', response.data.username);
+        console.log($cookies.keys());
+        router.push({ name: 'home' });
       } catch (error) {
         console.error(error);
       }
     };
+
     return {
       handleLogin,
     };

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { inject } from 'vue';
+
 export default {
   name: 'Home',
   data() {
@@ -17,7 +19,7 @@ export default {
   },
   methods: {
     fetchMessage() {
-      this.$axios.get('/')
+      inject('$axios').get('/')
         .then(response => {
           this.message = response.data.message
         })
