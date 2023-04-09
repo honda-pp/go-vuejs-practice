@@ -4,27 +4,37 @@
     <LoginForm v-on:login="handleLogin" />
   </div>
 </template>
-  
+
 <script>
+import { inject } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
-import axios from 'axios'
+import router from '../router'; // routerをインポートする
 
 export default {
   name: 'Login',
   components: {
     LoginForm,
   },
-  methods: {
-    handleLogin(credentials) {
-      axios.post('http://localhost:8080/api/login', credentials)
-        .then(response => {
-          console.log(response)
-          this.$router.push({ name: 'home' });
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    }
-  }
+  setup() {
+    const axiosInstance = inject('$axios');
+    const $cookies = inject('$cookies');
+
+    const handleLogin = async (credentials) => {
+      try {
+        const response = await axiosInstance.post('/login', credentials);
+        console.log(response.data);
+        $cookies.set('id', response.data.id);
+        $cookies.set('username', response.data.username);
+        console.log($cookies.keys());
+        router.push({ name: 'home' });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    return {
+      handleLogin,
+    };
+  },
 };
 </script>

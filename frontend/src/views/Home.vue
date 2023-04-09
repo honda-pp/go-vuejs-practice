@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { inject } from 'vue';
 
 export default {
   name: 'Home',
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     fetchMessage() {
-      axios.get('http://localhost:8080/api/', { withCredentials: true })
+      inject('$axios').get('/')
         .then(response => {
           this.message = response.data.message
         })

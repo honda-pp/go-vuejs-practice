@@ -36,9 +36,9 @@ func NewDB() (*DB, error) {
 
 func (db *DB) GetUser(username string) (*User, error) {
 	var user User
-	row := db.QueryRow("SELECT id, username, email, password_hash FROM users WHERE username = $1", username)
+	row := db.QueryRow("SELECT id, username, password_hash FROM users WHERE username = $1", username)
 
-	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash)
+	err := row.Scan(&user.ID, &user.Username, &user.PasswordHash)
 	if err != nil {
 		return nil, err
 	}
