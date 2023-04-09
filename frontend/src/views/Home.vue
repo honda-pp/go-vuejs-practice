@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'Home',
   data() {
@@ -19,7 +17,7 @@ export default {
   },
   methods: {
     fetchMessage() {
-      axios.get('http://localhost:8080/api/', { withCredentials: true })
+      this.$axios.get('/')
         .then(response => {
           this.message = response.data.message
         })
