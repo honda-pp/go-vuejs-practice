@@ -6,6 +6,7 @@
 </template>
   
 <script>
+import { inject } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
 
 export default {
@@ -13,17 +14,24 @@ export default {
   components: {
     LoginForm,
   },
-  methods: {
-    handleLogin(credentials) {
-      this.$axios.post('/login', credentials)
-        .then(response => {
-          console.log(response);
-          //this.$router.push({ name: 'home' });
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },
+  setup() {
+    const axios = inject('$axios');
+
+    const handleLogin = async (credentials) => {
+      console.log("handleLogin")
+      try {
+        console.log(credentials)
+        const response = await axios.post('/login', credentials);
+        console.log(response.data);
+        //this.$router.push({ name: 'home' });
+        //password123
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    return {
+      handleLogin,
+    };
   },
 };
 </script>
