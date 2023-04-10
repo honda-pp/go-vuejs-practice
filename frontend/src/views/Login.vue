@@ -8,7 +8,7 @@
 <script>
 import { inject } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
-import router from '../router'; // routerをインポートする
+import router from '../router';
 
 export default {
   name: 'Login',
@@ -22,10 +22,8 @@ export default {
     const handleLogin = async (credentials) => {
       try {
         const response = await axiosInstance.post('/login', credentials);
-        console.log(response.data);
         $cookies.set('id', response.data.id);
         $cookies.set('username', response.data.username);
-        console.log($cookies.keys());
         router.push({ name: 'home' });
       } catch (error) {
         console.error(error);
