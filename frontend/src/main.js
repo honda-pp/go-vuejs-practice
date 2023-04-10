@@ -14,4 +14,5 @@ const axiosInstance = axios.create({
 app.use(VueCookies);
 app.provide('$axios', axiosInstance);
 app.use(router);
+
 app.mount('#app');
