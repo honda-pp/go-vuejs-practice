@@ -24,15 +24,15 @@ export default {
   },
   setup() {
     const axiosInstance = inject('$axios');
-    const $cookies = inject('$cookies');
+    const cookies = inject('$cookies');
     const switchStatus = ref(false);
     const buttonText = { false: 'Sign up', true: 'Login' };
 
     const handleLogin = async (credentials) => {
       try {
         const response = await axiosInstance.post('/login', credentials);
-        $cookies.set('id', response.data.id);
-        $cookies.set('username', response.data.username);
+        cookies.set('id', response.data.id);
+        cookies.set('username', response.data.username);
         router.push({ name: 'home' });
       } catch (error) {
         console.error(error);

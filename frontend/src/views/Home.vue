@@ -14,9 +14,9 @@ import router from '../router';
 export default {
   name: 'Home',
   setup() {
-    const $cookies = inject('$cookies');
+    const cookies = inject('$cookies');
     return {
-      $cookies,
+      cookies,
     };
   },
   data() {
@@ -39,8 +39,8 @@ export default {
         });
     },
     logout() {
-      this.$cookies.remove('id');
-      this.$cookies.remove('username');
+      this.cookies.remove('id');
+      this.cookies.remove('username');
       router.push({ name: 'login' });
     }
   }
