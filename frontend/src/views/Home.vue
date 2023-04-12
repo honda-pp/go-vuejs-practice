@@ -25,18 +25,18 @@ export default {
     }
   },
   mounted() {
-    this.fetchMessage()
+    this.fetchMessage();
   },
   methods: {
     fetchMessage() {
       inject('$axios').get('/')
         .then(response => {
-          this.message = response.data.message
+          this.message = response.data.message;
         })
         .catch(error => {
-          console.error(error)
-          this.message = 'エラーが発生しました'
-        })
+          console.error(error);
+          this.message = 'エラーが発生しました';
+        });
     },
     logout() {
       this.$cookies.remove('id');
