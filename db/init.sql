@@ -6,3 +6,4 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, email, password_hash) VALUES ('testuser', 'testuser@example.com', '$2a$10$b6Nk3aziRYO9mVnMGnSSQuI6cj1hyYezlHce1RRbNYY4Tmjlw//Cy');
+--psql -U golang_usr -d golang_db -h localhost -p 5432

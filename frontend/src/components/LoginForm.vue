@@ -34,25 +34,3 @@ export default {
   },
 };
 </script>
-
-<style>
-form {
-  text-align: center;
-}
-form > div {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-}
-form > div label {
-  margin-bottom: 5px;
-}
-form > div input {
-  padding: 5px;
-  border-radius: 3px;
-  border: 1px solid #000000;
-  width: 50%;
-  min-width: 200px;
-  margin: 0 auto;
-}
-</style>

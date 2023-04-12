@@ -45,3 +45,9 @@ func (db *DB) GetUser(username string) (*User, error) {
 
 	return &user, nil
 }
+
+func (db *DB) AddUser(user User) error {
+	_, err := db.Exec("INSERT INTO users(username, email, password_hash) VALUES($1, $2, $3)",
+		user.Username, user.Email, user.PasswordHash)
+	return err
+}

@@ -14,9 +14,9 @@ import router from '../router';
 export default {
   name: 'Home',
   setup() {
-    const $cookies = inject('$cookies');
+    const cookies = inject('$cookies');
     return {
-      $cookies,
+      cookies,
     };
   },
   data() {
@@ -25,22 +25,22 @@ export default {
     }
   },
   mounted() {
-    this.fetchMessage()
+    this.fetchMessage();
   },
   methods: {
     fetchMessage() {
       inject('$axios').get('/')
         .then(response => {
-          this.message = response.data.message
+          this.message = response.data.message;
         })
         .catch(error => {
-          console.error(error)
-          this.message = 'エラーが発生しました'
-        })
+          console.error(error);
+          this.message = 'エラーが発生しました';
+        });
     },
     logout() {
-      this.$cookies.remove('id');
-      this.$cookies.remove('username');
+      this.cookies.remove('id');
+      this.cookies.remove('username');
       router.push({ name: 'login' });
     }
   }

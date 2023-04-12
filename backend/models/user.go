@@ -8,11 +8,12 @@ type User struct {
 	ID           int
 	Username     string
 	Email        string
+	Password     string
 	PasswordHash string
 }
 
 func (u *User) HashPassword() error {
-	hash, err := bcrypt.GenerateFromPassword([]byte(u.PasswordHash), bcrypt.DefaultCost)
+	hash, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
