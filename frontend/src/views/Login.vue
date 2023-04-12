@@ -41,10 +41,7 @@ export default {
 
     const handleSignup = async (user) => {
       try {
-        const response = await axiosInstance.post('/signup', user);
-        $cookies.set('id', response.data.id);
-        $cookies.set('username', response.data.username);
-        router.push({ name: 'home' });
+        await axiosInstance.post('/signup', user);
       } catch (error) {
         console.error(error);
       }

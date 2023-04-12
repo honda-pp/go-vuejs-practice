@@ -14,7 +14,6 @@ type LoginForm struct {
 }
 
 func Login(c *gin.Context) {
-	logger := gin.DefaultWriter
 	var loginForm LoginForm
 	if err := c.ShouldBind(&loginForm); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -30,7 +29,6 @@ func Login(c *gin.Context) {
 
 	user, err := db.GetUser(loginForm.Username)
 	if err != nil {
-		logger.Write([]byte(err.Error()))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
