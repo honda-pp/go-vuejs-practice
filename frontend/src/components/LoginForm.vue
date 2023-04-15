@@ -1,7 +1,10 @@
 <script setup>
-import { defineEmits } from 'vue';
+import { inject, ref } from 'vue';
+import router from '../router';
 
-const emit = defineEmits(['login']);
+const axiosInstance = inject('$axios');
+const cookies = inject('$cookies');
+const errorMessage = ref('');
 
 let username = '';
 let password = '';
@@ -11,8 +14,18 @@ function submit() {
     username: username,
     password: password,
   };
-  emit('login', credentials);
+  axiosInstance.post('/login', credentials)
+    .then(response => {
+      cookies.set('id', response.data.id);
+      cookies.set('username', response.data.username);
+      router.push({ name: 'home' });
+    })
+    .catch(error => {
+      console.error(error);
+      errorMessage.value = error.response.data.message;
+    });
 }
+
 </script>
 
 <template>
@@ -26,6 +39,9 @@ function submit() {
       <div>
         <label for='password'>Password</label>
         <input v-model='password' type='password' id='password' />
+      </div>
+      <div v-if="errorMessage" class='error-message'>
+        {{ errorMessage }}
       </div>
       <button type='submit'>Login</button>
     </form>

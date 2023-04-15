@@ -2,25 +2,10 @@
 import { inject, ref } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
 import SignupForm from '@/components/SignupForm.vue';
-import router from '../router';
 
 const axiosInstance = inject('$axios');
-const cookies = inject('$cookies');
 const switchStatus = ref(false);
-const buttonText = { false: 'Sign up', true: 'Login' };
-
-const handleLogin = async (credentials) => {
-  try {
-    const response = await axiosInstance.post('/login', credentials);
-    console.log(response)
-    cookies.set('id', response.data.id);
-    cookies.set('username', response.data.username);
-    router.push({ name: 'home' });
-  } catch (error) {
-    console.error(error);
-    console.error(error.response.data.message);
-  }
-};
+const buttonText = { false: 'Don\'t have an account? Sign up', true: 'Already have an account? Login' };
 
 const handleSignup = async (user) => {
   try {
@@ -33,15 +18,15 @@ const handleSignup = async (user) => {
 const switchForm = async () => {
   switchStatus.value = !switchStatus.value;
 };
+
 </script>
 
 <template>
   <h1>Login Page</h1>
   <div>
-    <LoginForm v-if="!switchStatus" @login="handleLogin" />
-    <SignupForm v-else @signup="handleSignup" />
-    <button @click="switchForm">
-      {{ switchStatus ? "Already have an account? " : "Don't have an account? " }}
+    <LoginForm v-if='!switchStatus'></LoginForm>
+    <SignupForm v-else @signup='handleSignup' />
+    <button @click='switchForm'>
       {{ buttonText[switchStatus] }}
     </button>
   </div>
