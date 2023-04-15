@@ -22,7 +22,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = VueCookies.get('id') != null;
+  const isLoggedIn = VueCookies.get('id') != null && VueCookies.get('username') != null;
   if (!isLoggedIn && to.name !== 'login') {
     next({ name: 'login' })
   } else {

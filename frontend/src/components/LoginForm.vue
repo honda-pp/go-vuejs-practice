@@ -1,3 +1,20 @@
+<script setup>
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['login']);
+
+let username = '';
+let password = '';
+
+function submit() {
+  const credentials = {
+    username: username,
+    password: password,
+  };
+  emit('login', credentials);
+}
+</script>
+
 <template>
   <div>
     <h1>Login</h1>
@@ -14,23 +31,3 @@
     </form>
   </div>
 </template>
-  
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-    };
-  },
-  methods: {
-    submit() {
-      const credentials = {
-        username: this.username,
-        password: this.password,
-      };
-      this.$emit('login', credentials);
-    },
-  },
-};
-</script>

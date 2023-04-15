@@ -7,42 +7,44 @@
   </div>
 </template>
 
-<script>
-import { inject } from 'vue';
+<script setup>
+import { inject, ref } from 'vue';
 import router from '../router';
 
-export default {
-  name: 'Home',
-  setup() {
-    const cookies = inject('$cookies');
-    return {
-      cookies,
-    };
-  },
-  data() {
-    return {
-      message: '',
-    }
-  },
-  mounted() {
-    this.fetchMessage();
-  },
-  methods: {
-    fetchMessage() {
-      inject('$axios').get('/')
-        .then(response => {
-          this.message = response.data.message;
-        })
-        .catch(error => {
-          console.error(error);
-          this.message = 'エラーが発生しました';
-        });
-    },
-    logout() {
-      this.cookies.remove('id');
-      this.cookies.remove('username');
-      router.push({ name: 'login' });
-    }
-  }
+const cookies = inject('$cookies');
+const axios = inject('$axios');
+
+const message = ref('');
+
+const fetchMessage = () => {
+  axios.get('/')
+    .then(response => {
+      message.value = response.data.message;
+      console.log(response);
+    })
+    .catch(error => {
+      console.error(error);
+      message.value = 'エラーが発生しました';
+    });
+}
+fetchMessage();
+
+const logout = () => {
+  cookies.remove('id');
+  cookies.remove('username');
+  router.push({ name: 'login' });
 }
 </script>
+
+<style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #eee;
+}
+.logout-btn {
+  padding: 6px;
+}
+</style>
