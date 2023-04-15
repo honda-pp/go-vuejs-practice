@@ -1,5 +1,3 @@
-
-
 <script setup>
 import { inject, ref } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
@@ -14,11 +12,13 @@ const buttonText = { false: 'Sign up', true: 'Login' };
 const handleLogin = async (credentials) => {
   try {
     const response = await axiosInstance.post('/login', credentials);
+    console.log(response)
     cookies.set('id', response.data.id);
     cookies.set('username', response.data.username);
     router.push({ name: 'home' });
   } catch (error) {
     console.error(error);
+    console.error(error.response.data.message);
   }
 };
 

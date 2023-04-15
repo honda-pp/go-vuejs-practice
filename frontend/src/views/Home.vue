@@ -1,12 +1,3 @@
-<template>
-  <div>
-    <div class="header">
-      <h1>{{ message }}</h1>
-      <button class="logout-btn" @click="logout">ログアウト</button>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { inject, ref } from 'vue';
 import router from '../router';
@@ -35,6 +26,15 @@ const logout = () => {
   router.push({ name: 'login' });
 }
 </script>
+
+<template>
+  <div>
+    <div class="header">
+      <h1>{{ message }}</h1>
+      <button class="logout-btn" @click="logout">ログアウト</button>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .header {

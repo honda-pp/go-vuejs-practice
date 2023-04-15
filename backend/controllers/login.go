@@ -34,7 +34,7 @@ func Login(c *gin.Context) {
 	}
 
 	if err = user.CheckPassword(loginForm.Password); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "failed to login"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid login credentials"})
 		return
 	}
 
