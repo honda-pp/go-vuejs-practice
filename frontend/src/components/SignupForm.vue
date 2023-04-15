@@ -1,3 +1,20 @@
+<script setup>
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['signup']);
+
+const user = {
+  username: '',
+  email: '',
+  password: '',
+};
+
+const signup = async () => {
+  emit('signup', user);
+};
+
+</script>
+
 <template>
   <div>
     <h1>Sign up</h1>
@@ -19,22 +36,3 @@
 </div>
 </template>
   
-<script>
-export default {
-  name: 'SignupForm',
-  data() {
-    return {
-      user: {
-        username: '',
-        email: '',
-        password: '',
-      },
-    };
-  },
-  methods: {
-    async signup() {
-      this.$emit('signup', this.user);
-    },
-  },
-};
-</script>
