@@ -35,4 +35,3 @@ const signup = async () => {
   </form>
 </div>
 </template>
-  
