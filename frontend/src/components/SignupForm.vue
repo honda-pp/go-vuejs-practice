@@ -1,18 +1,20 @@
 <script setup>
-import { defineEmits } from 'vue';
+import { inject, ref } from 'vue';
 
-const emit = defineEmits(['signup']);
-
-const user = {
+const axiosInstance = inject('$axios');
+const user = ref({
   username: '',
   email: '',
   password: '',
-};
+});
 
 const signup = async () => {
-  emit('signup', user);
+  try {
+    await axiosInstance.post('/signup', user.value);
+  } catch (error) {
+    console.error(error);
+  }
 };
-
 </script>
 
 <template>
@@ -33,5 +35,5 @@ const signup = async () => {
     </div>
     <button type="submit">Sign up</button>
   </form>
-</div>
+  </div>
 </template>

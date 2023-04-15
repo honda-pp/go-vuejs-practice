@@ -1,18 +1,17 @@
 <script setup>
-import { inject, ref } from 'vue';
-import router from '../router';
+import { ref, inject } from 'vue';
+import router from '@/router';
 
 const axiosInstance = inject('$axios');
 const cookies = inject('$cookies');
+const username = ref('');
+const password = ref('');
 const errorMessage = ref('');
 
-let username = '';
-let password = '';
-
-function submit() {
+const submit = () => {
   const credentials = {
-    username: username,
-    password: password,
+    username: username.value,
+    password: password.value,
   };
   axiosInstance.post('/login', credentials)
     .then(response => {
@@ -24,8 +23,7 @@ function submit() {
       console.error(error);
       errorMessage.value = error.response.data.message;
     });
-}
-
+};
 </script>
 
 <template>
