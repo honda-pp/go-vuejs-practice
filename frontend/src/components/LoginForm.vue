@@ -20,7 +20,6 @@ const submit = () => {
       router.push({ name: 'home' });
     })
     .catch(error => {
-      console.error(error);
       errorMessage.value = error.response.data.message;
     });
 };

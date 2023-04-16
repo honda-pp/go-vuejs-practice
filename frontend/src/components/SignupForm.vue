@@ -7,13 +7,16 @@ const user = ref({
   email: '',
   password: '',
 });
+const signupMessage = ref('');
 
 const signup = async () => {
-  try {
-    await axiosInstance.post('/signup', user.value);
-  } catch (error) {
-    console.error(error);
-  }
+  axiosInstance.post('/signup', user.value)
+    .then(response => {
+      signupMessage.value = response.data.message
+    })
+    .catch(error => {
+      signupMessage.value = error.response.data.message;
+    })
 };
 </script>
 
@@ -33,6 +36,9 @@ const signup = async () => {
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="user.password" />
     </div>
+    <div v-if="signupMessage" class='signup-message'>
+        {{ signupMessage }}
+      </div>
     <button type="submit">Sign up</button>
   </form>
   </div>
