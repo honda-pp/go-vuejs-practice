@@ -28,8 +28,8 @@ const logout = () => {
 </script>
 
 <template>
-  <button class="logout-btn" @click="logout">ログアウト</button>
   <div>
+    <button class="logout-btn" @click="logout">ログアウト</button>
     <div class="header">
       <h1>{{ message }}</h1>
     </div>
@@ -45,6 +45,9 @@ const logout = () => {
   background-color: #eee;
 }
 .logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   padding: 6px;
 }
 </style>

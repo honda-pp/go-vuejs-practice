@@ -28,16 +28,21 @@ const logout = () => {
 </script>
 
 <template>
-  <button class="logout-btn" @click="logout">ログアウト</button>
   <div>
-    <ul>
-      <li v-for="user in state.userList" :key="user.Id">{{ user.Username }}</li>
-    </ul>
+    <button class="logout-btn" @click="logout">ログアウト</button>
+    <div>
+      <ul>
+        <li v-for="user in state.userList" :key="user.Id">{{ user.Username }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   padding: 6px;
 }
 </style>
