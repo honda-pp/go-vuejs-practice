@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import VueCookies from 'vue-cookies';
 import Login from '../views/Login.vue';
+import UserList from '../views/UserList.vue';
 import Home from '../views/Home.vue';
 
 const router = createRouter({
@@ -17,6 +18,12 @@ const router = createRouter({
       name: 'login',
       component: Login,
       meta: { requiresAuth: false },
+    },
+    {
+      path: '/userList',
+      name: 'userList',
+      component: UserList,
+      meta: { requiresAuth: true },
     },
   ],
 });
