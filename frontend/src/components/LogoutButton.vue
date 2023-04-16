@@ -12,7 +12,7 @@ const logout = () => {
 </script>
 
 <template>
-  <button class="logout-btn" @click="logout">ログアウト</button>
+  <button class="logout-btn" @click="logout">Logout</button>
 </template>
 
 <style scoped>

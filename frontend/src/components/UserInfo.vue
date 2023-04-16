@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, inject, ref } from 'vue';
 import LogoutButton from '@/components/LogoutButton.vue';
+import UserListButton from '@/components/UserListButton.vue';
 
 const axios = inject('$axios');
 const message = ref('');
@@ -28,11 +29,12 @@ getUserInfo();
 </script>
 
 <template>
-  <div>
-    <div class="header">
-      <h1>{{ message }}</h1>
-    </div>
+  <div class="btn">
     <LogoutButton />
+    <UserListButton />
+  </div>
+  <div class="header">
+    <h1>{{ message }}</h1>
   </div>
 </template>
 
