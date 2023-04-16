@@ -3,7 +3,6 @@ import VueCookies from 'vue-cookies';
 import Login from '@/views/Login.vue';
 import UserList from '@/views/UserList.vue';
 import UserPage from '@/views/UserPage.vue';
-import Home from '@/views/Home.vue';
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -11,7 +10,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: UserPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/userPage/:id',
+      name: 'userPage',
+      component: UserPage,
       meta: { requiresAuth: true },
     },
     {
@@ -19,12 +24,6 @@ const router = createRouter({
       name: 'login',
       component: Login,
       meta: { requiresAuth: false },
-    },
-    {
-      path: '/userPage/:id',
-      name: 'userPage',
-      component: UserPage,
-      meta: { requiresAuth: true },
     },
     {
       path: '/userList',
