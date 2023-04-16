@@ -1,18 +1,23 @@
 <script setup>
-import { defineEmits } from 'vue';
+import { inject, ref } from 'vue';
 
-const emit = defineEmits(['signup']);
-
-const user = {
+const axiosInstance = inject('$axios');
+const user = ref({
   username: '',
   email: '',
   password: '',
-};
+});
+const signupMessage = ref('');
 
 const signup = async () => {
-  emit('signup', user);
+  axiosInstance.post('/signup', user.value)
+    .then(response => {
+      signupMessage.value = response.data.message
+    })
+    .catch(error => {
+      signupMessage.value = error.response.data.message;
+    })
 };
-
 </script>
 
 <template>
@@ -31,8 +36,10 @@ const signup = async () => {
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="user.password" />
     </div>
+    <div v-if="signupMessage" class='signup-message'>
+        {{ signupMessage }}
+      </div>
     <button type="submit">Sign up</button>
   </form>
-</div>
+  </div>
 </template>
-  

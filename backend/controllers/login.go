@@ -22,19 +22,19 @@ func Login(c *gin.Context) {
 
 	db, err := models.NewDB()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "Internal Server Error."})
 		return
 	}
 	defer db.Close()
 
 	user, err := db.GetUser(loginForm.Username)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "The user does not exist."})
 		return
 	}
 
 	if err = user.CheckPassword(loginForm.Password); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "failed to login"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "message": "The username and password combination is incorrect."})
 		return
 	}
 
