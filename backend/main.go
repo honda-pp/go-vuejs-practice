@@ -25,6 +25,7 @@ func main() {
 	api.POST("/login", controllers.Login)
 	api.POST("/signup", controllers.Signup)
 	api.GET("/userList", controllers.UserList)
+	api.GET("/userInfo/:id", controllers.UserInfo)
 
 	router.Run(":8080")
 }

@@ -27,7 +27,7 @@ func Login(c *gin.Context) {
 	}
 	defer db.Close()
 
-	user, err := db.GetUser(loginForm.Username)
+	user, err := db.GetUserFromUsername(loginForm.Username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "The user does not exist."})
 		return
