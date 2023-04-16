@@ -22,9 +22,12 @@ func main() {
 			"message": "Welcome to Your App",
 		})
 	})
-	api.POST("/login", controllers.Login)
-	api.POST("/signup", controllers.Signup)
-	api.GET("/userList", controllers.UserList)
+	{
+		api.POST("/login", controllers.Login)
+	}
+	{
+		api.POST("/signup", controllers.Signup)
+	}
 
 	router.Run(":8080")
 }

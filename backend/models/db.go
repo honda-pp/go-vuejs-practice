@@ -51,28 +51,3 @@ func (db *DB) AddUser(user User) error {
 		user.Username, user.Email, user.PasswordHash)
 	return err
 }
-
-func (db *DB) GetUserList() ([]*User, error) {
-	rows, err := db.Query("SELECT id, username FROM users")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var users []*User
-	for rows.Next() {
-		user := &User{}
-		err = rows.Scan(&user.ID, &user.Username)
-		if err != nil {
-			return nil, err
-		}
-		users = append(users, user)
-	}
-
-	err = rows.Err()
-	if err != nil {
-		return nil, err
-	}
-
-	return users, nil
-}

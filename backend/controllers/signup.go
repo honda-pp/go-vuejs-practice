@@ -31,8 +31,9 @@ func Signup(c *gin.Context) {
 		var status int
 		var message string
 		if pgerr, ok := err.(*pq.Error); ok && pgerr.Code == "23505" {
+			// Check if the error code is 23505, which indicates a violation of a unique constraint
 			status = http.StatusConflict
-			message = pgerr.Detail
+			message = "A user with this username already exists"
 		} else {
 			status = http.StatusInternalServerError
 			message = "Internal server error"
