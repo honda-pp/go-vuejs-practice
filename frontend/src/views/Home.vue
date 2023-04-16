@@ -1,8 +1,7 @@
 <script setup>
 import { inject, ref } from 'vue';
-import router from '@/router';
+import LogoutButton from '@/components/LogoutButton.vue';
 
-const cookies = inject('$cookies');
 const axios = inject('$axios');
 
 const message = ref('');
@@ -19,17 +18,11 @@ const fetchMessage = () => {
     });
 }
 fetchMessage();
-
-const logout = () => {
-  cookies.remove('id');
-  cookies.remove('username');
-  router.push({ name: 'login' });
-}
 </script>
 
 <template>
   <div>
-    <button class="logout-btn" @click="logout">ログアウト</button>
+    <LogoutButton />
     <div class="header">
       <h1>{{ message }}</h1>
     </div>
@@ -43,11 +36,5 @@ const logout = () => {
   align-items: center;
   padding: 10px;
   background-color: #eee;
-}
-.logout-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 6px;
 }
 </style>
