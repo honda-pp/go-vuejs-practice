@@ -22,7 +22,7 @@ func Login(c *gin.Context) {
 
 	db, err := models.NewDB()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "Internal Server Error"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "Internal Server Error."})
 		return
 	}
 	defer db.Close()
