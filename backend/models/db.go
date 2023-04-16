@@ -34,7 +34,7 @@ func NewDB() (*DB, error) {
 	return &DB{db}, nil
 }
 
-func (db *DB) GetUser(username string) (*User, error) {
+func (db *DB) GetUserFromUsername(username string) (*User, error) {
 	var user User
 	row := db.QueryRow("SELECT id, username, password_hash FROM users WHERE username = $1", username)
 
@@ -46,10 +46,16 @@ func (db *DB) GetUser(username string) (*User, error) {
 	return &user, nil
 }
 
-func (db *DB) AddUser(user User) error {
-	_, err := db.Exec("INSERT INTO users(username, email, password_hash) VALUES($1, $2, $3)",
-		user.Username, user.Email, user.PasswordHash)
-	return err
+func (db *DB) GetUserFromID(id string) (*User, error) {
+	var user User
+	row := db.QueryRow("SELECT id, username FROM users WHERE id = $1", id)
+
+	err := row.Scan(&user.ID, &user.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }
 
 func (db *DB) GetUserList() ([]*User, error) {
@@ -75,4 +81,10 @@ func (db *DB) GetUserList() ([]*User, error) {
 	}
 
 	return users, nil
+}
+
+func (db *DB) AddUser(user User) error {
+	_, err := db.Exec("INSERT INTO users(username, email, password_hash) VALUES($1, $2, $3)",
+		user.Username, user.Email, user.PasswordHash)
+	return err
 }

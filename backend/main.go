@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/honda-pp/go-vuejs-practice/backend/controllers"
@@ -17,14 +15,10 @@ func main() {
 	router.Use(cors.New(config))
 
 	api := router.Group("/api")
-	api.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Welcome to Your App",
-		})
-	})
 	api.POST("/login", controllers.Login)
 	api.POST("/signup", controllers.Signup)
 	api.GET("/userList", controllers.UserList)
+	api.GET("/userInfo/:id", controllers.UserInfo)
 
 	router.Run(":8080")
 }
