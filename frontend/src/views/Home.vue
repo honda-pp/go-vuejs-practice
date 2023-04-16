@@ -1,6 +1,6 @@
 <script setup>
 import { inject, ref } from 'vue';
-import router from '../router';
+import router from '@/router';
 
 const cookies = inject('$cookies');
 const axios = inject('$axios');
@@ -28,10 +28,10 @@ const logout = () => {
 </script>
 
 <template>
+  <button class="logout-btn" @click="logout">ログアウト</button>
   <div>
     <div class="header">
       <h1>{{ message }}</h1>
-      <button class="logout-btn" @click="logout">ログアウト</button>
     </div>
   </div>
 </template>
