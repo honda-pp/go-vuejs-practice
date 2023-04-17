@@ -1,15 +1,18 @@
 package models
 
 import (
+	"time"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID           int
-	Username     string
-	Email        string
-	Password     string
-	PasswordHash string
+	ID            int
+	Username      string
+	Email         string
+	Password      string
+	PasswordHash  string
+	LastLoginTime time.Time
 }
 
 func (u *User) HashPassword() error {
