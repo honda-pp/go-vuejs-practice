@@ -31,7 +31,7 @@ const goToUserPage = (id) => {
     <div>
       <ul>
         <li v-for="user in state.userList" :key="user.ID" @click="goToUserPage(user.ID)">
-          {{ user.Username }}: {{ user.LastLoginTime }}
+          {{ user.Username }}
         </li>
       </ul>
     </div>
