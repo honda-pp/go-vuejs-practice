@@ -59,7 +59,20 @@ func (db *DB) GetUserFromID(id string) (*User, error) {
 }
 
 func (db *DB) GetUserList() ([]*User, error) {
-	rows, err := db.Query("SELECT id, username FROM users")
+	rows, err := db.Query(`
+		SELECT
+			users.id,
+			users.username,
+			MAX(login_history.login_time) AS last_login_time
+		FROM
+			users
+		LEFT JOIN
+			login_history ON users.id = login_history.user_id
+		GROUP BY
+			users.id
+		ORDER BY
+			last_login_time;
+	`)
 	if err != nil {
 		return nil, err
 	}
@@ -68,10 +81,12 @@ func (db *DB) GetUserList() ([]*User, error) {
 	var users []*User
 	for rows.Next() {
 		user := &User{}
-		err = rows.Scan(&user.ID, &user.Username)
+		var loginTime sql.NullTime
+		err = rows.Scan(&user.ID, &user.Username, &loginTime)
 		if err != nil {
 			return nil, err
 		}
+		user.LastLoginTime = loginTime.Time
 		users = append(users, user)
 	}
 
