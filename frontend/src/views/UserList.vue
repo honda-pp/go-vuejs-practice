@@ -47,8 +47,11 @@ ul {
   margin: 0 auto;
 }
 li {
-  margin-bottom: 10px;
+  padding: 5px;
+  padding-left: 5%;
+  margin-bottom: 5px;
   text-align: left;
+  background-color: #eee;
 }
 
 </style>
