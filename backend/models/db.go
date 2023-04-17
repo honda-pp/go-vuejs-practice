@@ -88,3 +88,8 @@ func (db *DB) AddUser(user User) error {
 		user.Username, user.Email, user.PasswordHash)
 	return err
 }
+
+func (db *DB) InsertLoginHistory(user *User) error {
+	_, err := db.Exec("INSERT INTO login_history(user_id) VALUES($1)", user.ID)
+	return err
+}

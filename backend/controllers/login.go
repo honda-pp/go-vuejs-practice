@@ -38,6 +38,8 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	db.InsertLoginHistory(user)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "login successful",
 		"id":       strconv.Itoa(user.ID),
