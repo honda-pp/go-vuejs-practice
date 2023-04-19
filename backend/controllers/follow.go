@@ -21,7 +21,7 @@ func Follow(c *gin.Context) {
 
 	followerIDStr, err := c.Cookie("id")
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error(), "message": "Unauthorized"})
 		return
 	}
 	followerID, _ := strconv.Atoi(followerIDStr)
