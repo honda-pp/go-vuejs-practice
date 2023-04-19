@@ -12,5 +12,13 @@ CREATE TABLE login_history (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE follower (
+  follower_id INTEGER NOT NULL,
+  followee_id INTEGER NOT NULL,
+  PRIMARY KEY (follower_id, followee_id),
+  FOREIGN KEY (follower_id) REFERENCES users (id) ON DELETE CASCADE,
+  FOREIGN KEY (followee_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
 INSERT INTO users (username, email, password_hash) VALUES ('testuser', 'testuser@example.com', '$2a$10$b6Nk3aziRYO9mVnMGnSSQuI6cj1hyYezlHce1RRbNYY4Tmjlw//Cy');
 --psql -U golang_usr -d golang_db -h localhost -p 5432

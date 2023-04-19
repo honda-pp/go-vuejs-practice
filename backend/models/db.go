@@ -102,6 +102,11 @@ func (db *DB) AddUser(user User) error {
 	return err
 }
 
+func (db *DB) Follow(followerID, followeeID int) error {
+	_, err := db.Exec("INSERT INTO follower(follower_id, followee_id) VALUES($1, $2)", followerID, followeeID)
+	return err
+}
+
 func (db *DB) InsertLoginHistory(user *User) error {
 	_, err := db.Exec("INSERT INTO login_history(user_id) VALUES($1)", user.ID)
 	return err
