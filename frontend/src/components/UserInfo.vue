@@ -9,7 +9,7 @@ const cookies = inject('$cookies');
 const props = defineProps({
     id: String,
 });
-
+const followMessage = ref('');
 const getUserInfo = () => {
   let id = props.id
   if (id == null) {
@@ -24,6 +24,14 @@ const getUserInfo = () => {
       message.value = 'エラーが発生しました';
     });
 }
+const followRequest = async () => {
+  try {
+    const response = await axios.post('/follow', {'followee_id': parseInt(props.id)});
+    followMessage.value = response.data.message;
+  } catch (error) {
+    followMessage.value = error.response.data.message;
+  }
+};
 
 getUserInfo();
 </script>
@@ -35,6 +43,12 @@ getUserInfo();
   </div>
   <div class="header">
     <h1>{{ message }}</h1>
+    <button v-if="cookies.get('id') != props.id" class="follow-button" @click="followRequest()">
+      Follow
+    </button>
+    <div>
+      {{ followMessage }}
+    </div>
   </div>
 </template>
 
@@ -45,5 +59,15 @@ getUserInfo();
   align-items: center;
   padding: 5px;
   background-color: #eee;
+}
+
+.follow-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>

@@ -4,6 +4,7 @@ import router from '@/router';
 import LogoutButton from '@/components/LogoutButton.vue';
 
 const axios = inject('$axios');
+const cookies = inject('$cookies');
 const followMessage = reactive({
   message: '',
   id: -1
@@ -47,7 +48,7 @@ getUserList();
           <div class="user-info" @click="goToUserPage(user.ID)">
             {{ user.Username }}
           </div>
-          <button class="follow-button" @click="followRequest(user.ID)">
+          <button v-if="cookies.get('id') != user.ID" class="follow-button" @click="followRequest(user.ID)">
             Follow
           </button>
           <div v-if="followMessage.id == user.ID" class="follow-message">
