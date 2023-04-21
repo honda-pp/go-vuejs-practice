@@ -38,7 +38,7 @@ const signup = async () => {
     </div>
     <div v-if="signupMessage" class='signup-message'>
         {{ signupMessage }}
-      </div>
+    </div>
     <button type="submit">Sign up</button>
   </form>
   </div>

@@ -17,6 +17,7 @@ func main() {
 	api := router.Group("/api")
 	api.POST("/login", controllers.Login)
 	api.POST("/signup", controllers.Signup)
+	api.POST("/follow", controllers.Follow)
 	api.GET("/userList", controllers.UserList)
 	api.GET("/userInfo/:id", controllers.UserInfo)
 

@@ -63,7 +63,7 @@ func (db *DB) GetUserList() ([]*User, error) {
 		SELECT
 			users.id,
 			users.username,
-			MAX(login_history.login_time) AS last_login_time
+			COALESCE(MAX(login_history.login_time), 'epoch'::timestamp) AS last_login_time
 		FROM
 			users
 		LEFT JOIN
@@ -71,7 +71,7 @@ func (db *DB) GetUserList() ([]*User, error) {
 		GROUP BY
 			users.id
 		ORDER BY
-			last_login_time;
+			last_login_time DESC;
 	`)
 	if err != nil {
 		return nil, err
@@ -81,12 +81,10 @@ func (db *DB) GetUserList() ([]*User, error) {
 	var users []*User
 	for rows.Next() {
 		user := &User{}
-		var loginTime sql.NullTime
-		err = rows.Scan(&user.ID, &user.Username, &loginTime)
+		err = rows.Scan(&user.ID, &user.Username, &user.LastLoginTime)
 		if err != nil {
 			return nil, err
 		}
-		user.LastLoginTime = loginTime.Time
 		users = append(users, user)
 	}
 
@@ -101,6 +99,11 @@ func (db *DB) GetUserList() ([]*User, error) {
 func (db *DB) AddUser(user User) error {
 	_, err := db.Exec("INSERT INTO users(username, email, password_hash) VALUES($1, $2, $3)",
 		user.Username, user.Email, user.PasswordHash)
+	return err
+}
+
+func (db *DB) Follow(followerID, followeeID int) error {
+	_, err := db.Exec("INSERT INTO follower(follower_id, followee_id) VALUES($1, $2)", followerID, followeeID)
 	return err
 }
 
