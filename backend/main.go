@@ -24,6 +24,6 @@ func main() {
 	api.POST("/follow", controllers.Follow)
 	api.GET("/userList", controllers.UserList)
 	api.GET("/userInfo/:id", controllers.UserInfo)
-
+	api.GET("/userId/", controllers.GetUserID)
 	router.Run(":8080")
 }

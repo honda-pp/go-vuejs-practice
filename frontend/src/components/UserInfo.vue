@@ -5,7 +5,6 @@ import UserListButton from '@/components/UserListButton.vue';
 
 const axios = inject('$axios');
 const message = ref('');
-const cookies = inject('$cookies');
 const mypage = ref(false)
 const props = defineProps({
     id: String,
@@ -13,7 +12,14 @@ const props = defineProps({
 const followMessage = ref('');
 const getUserInfo = () => {
   let id = props.id
-  mypage.value = id == cookies.get('id')
+  axios.get('/userId/')
+    .then(response => {
+      mypage.value = id == response.data.id
+
+  }).catch(error => {
+      console.error(error);
+      message.value = 'エラーが発生しました';
+    });
   axios.get('/userInfo/' + id)
     .then(response => {
       message.value = response.data.userInfo.Username + '\'s Page';

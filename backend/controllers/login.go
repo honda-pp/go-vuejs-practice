@@ -51,3 +51,8 @@ func Login(c *gin.Context) {
 		"username": user.Username,
 	})
 }
+
+func GetUserID(c *gin.Context) {
+	session := sessions.Default(c)
+	c.JSON(http.StatusOK, gin.H{"id": session.Get("userId")})
+}
