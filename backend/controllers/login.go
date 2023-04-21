@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/honda-pp/go-vuejs-practice/backend/models"
 )
@@ -39,6 +40,10 @@ func Login(c *gin.Context) {
 	}
 
 	db.InsertLoginHistory(user)
+
+	session := sessions.Default(c)
+	session.Set("userId", user.ID)
+	session.Save()
 
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "login successful",
