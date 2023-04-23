@@ -2,10 +2,11 @@
 import { inject } from 'vue';
 import router from '@/router';
 
+const axios = inject('$axios');
 const cookies = inject('$cookies');
 
 const logout = () => {
-  cookies.remove('id');
+  axios.get('/logout');
   cookies.remove('username');
   router.push({ name: 'login' });
 }

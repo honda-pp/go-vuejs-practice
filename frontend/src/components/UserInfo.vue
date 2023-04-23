@@ -10,24 +10,20 @@ const props = defineProps({
     id: String,
 });
 const followMessage = ref('');
-const getUserInfo = () => {
+const getUserInfo = async () => {
   let id = props.id
-  axios.get('/userId/')
-    .then(response => {
-      mypage.value = id == response.data.id
-
-  }).catch(error => {
-      console.error(error);
-      message.value = 'エラーが発生しました';
-    });
-  axios.get('/userInfo/' + id)
-    .then(response => {
-      message.value = response.data.userInfo.Username + '\'s Page';
-    })
-    .catch(error => {
-      console.error(error);
-      message.value = 'エラーが発生しました';
-    });
+  try {
+    const response1 = await axios.get('/userId');
+    if (id == null) {
+      id = response1.data.id
+    }
+    mypage.value = id == response1.data.id
+    const response2 = await axios.get('/userInfo/' + id);
+    message.value = response2.data.userInfo.Username + '\'s Page';
+  } catch (error) {
+    console.error(error);
+    message.value = 'エラーが発生しました';
+  }
 }
 const followRequest = async () => {
   try {

@@ -2,7 +2,7 @@
 import { ref, inject } from 'vue';
 import router from '@/router';
 
-const axiosInstance = inject('$axios');
+const axios = inject('$axios');
 const cookies = inject('$cookies');
 const username = ref('');
 const password = ref('');
@@ -13,9 +13,8 @@ const submit = () => {
     username: username.value,
     password: password.value,
   };
-  axiosInstance.post('/login', credentials)
+  axios.post('/login', credentials)
     .then(response => {
-      cookies.set('id', response.data.id);
       cookies.set('username', response.data.username);
       router.push({ name: 'home' });
     })
