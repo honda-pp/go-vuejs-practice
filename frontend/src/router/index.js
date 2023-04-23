@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { createRouter, createWebHistory } from 'vue-router';
-import VueCookies from 'vue-cookies';
 import Login from '@/views/Login.vue';
 import UserList from '@/views/UserList.vue';
 import UserPage from '@/views/UserPage.vue';
@@ -34,12 +34,18 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = VueCookies.get('id') != null && VueCookies.get('username') != null;
-  if (!isLoggedIn && to.name !== 'login') {
-    next({ name: 'login' })
-  } else {
-    next()
+router.beforeEach(async (to, from, next) => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/userId', { withCredentials: true });
+    const userId = response.data.id;
+    const isLoggedIn = !!userId;
+    if (!isLoggedIn && to.name !== 'login') {
+      next({ name: 'login' });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.error(error);
   }
 });
 

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/honda-pp/go-vuejs-practice/backend/models"
 )
@@ -19,12 +19,12 @@ func Follow(c *gin.Context) {
 		return
 	}
 
-	followerIDStr, err := c.Cookie("id")
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error(), "message": "Unauthorized"})
+	session := sessions.Default(c)
+	followerID, ok := session.Get("userId").(int)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 		return
 	}
-	followerID, _ := strconv.Atoi(followerIDStr)
 
 	db, err := models.NewDB()
 	if err != nil {
