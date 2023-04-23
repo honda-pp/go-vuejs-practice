@@ -52,6 +52,13 @@ func Login(c *gin.Context) {
 	})
 }
 
+func Logout(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Clear()
+	session.Options(sessions.Options{Path: "/api/", MaxAge: -1})
+	session.Save()
+}
+
 func GetUserID(c *gin.Context) {
 	session := sessions.Default(c)
 	c.JSON(http.StatusOK, gin.H{"id": session.Get("userId")})

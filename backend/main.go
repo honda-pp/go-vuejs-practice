@@ -14,6 +14,7 @@ func main() {
 	config.AllowOrigins = []string{"http://localhost:88"}
 	config.AllowCredentials = true
 	store := cookie.NewStore([]byte("secret"))
+	store.Options(sessions.Options{Domain: "localhost", Path: "/api/", MaxAge: 86400})
 	router.Use(sessions.Sessions("mysession", store))
 	router.Use(gin.Logger())
 	router.Use(cors.New(config))
@@ -22,8 +23,9 @@ func main() {
 	api.POST("/login", controllers.Login)
 	api.POST("/signup", controllers.Signup)
 	api.POST("/follow", controllers.Follow)
+	api.GET("/logout", controllers.Logout)
 	api.GET("/userList", controllers.UserList)
 	api.GET("/userInfo/:id", controllers.UserInfo)
-	api.GET("/userId/", controllers.GetUserID)
+	api.GET("/userId", controllers.GetUserID)
 	router.Run(":8080")
 }
