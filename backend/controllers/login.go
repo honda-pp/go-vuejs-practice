@@ -59,6 +59,11 @@ func Logout(c *gin.Context) {
 	session.Save()
 }
 
+func IsLogin(c *gin.Context) {
+	session := sessions.Default(c)
+	c.JSON(http.StatusOK, gin.H{"isLogin": session.Get("userId") != nil})
+}
+
 func GetUserID(c *gin.Context) {
 	session := sessions.Default(c)
 	c.JSON(http.StatusOK, gin.H{"id": session.Get("userId")})
