@@ -19,7 +19,7 @@ const getUserInfo = async () => {
     }
     mypage.value = id == response1.data.id
     const response2 = await axios.get('/userInfo/' + id);
-    message.value = response2.data.userInfo.Username + '\'s Page';
+    message.value = response2.data.userInfo.username + '\'s Page';
   } catch (error) {
     console.error(error);
     message.value = 'エラーが発生しました';

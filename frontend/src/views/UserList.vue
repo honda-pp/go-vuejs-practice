@@ -53,7 +53,7 @@ getUserList();
       <ul class="user-list">
         <li v-for="user in state.userList" :key="user.ID">
           <div class="user-info" @click="goToUserPage(user.ID)">
-            {{ user.Username }}
+            {{ user.username }}
           </div>
           <button v-if="userId != user.ID" class="follow-button" @click="followRequest(user.ID)">
             Follow

@@ -29,7 +29,7 @@ func main() {
 	api.POST("/login", controllers.Login)
 	api.POST("/signup", controllers.Signup)
 	api.POST("/follow", controllers.Follow)
-	api.GET("/isLogin", controllers.IsLogin)
+	api.GET("/isLoggedIn", controllers.IsLoggedIn)
 	api.GET("/logout", controllers.Logout)
 	api.GET("/userList", controllers.UserList)
 	api.GET("/userInfo/:id", controllers.UserInfo)
@@ -42,7 +42,7 @@ func restrictAccessMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
 		userID := session.Get("userId")
-		if userID == nil && c.Request.URL.Path != "/api/isLogin" && c.Request.URL.Path != "/api/login" && c.Request.URL.Path != "/api/signup" {
+		if userID == nil && c.Request.URL.Path != "/api/isLoggedIn" && c.Request.URL.Path != "/api/login" && c.Request.URL.Path != "/api/signup" {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}

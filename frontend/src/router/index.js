@@ -36,10 +36,8 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/isLogin', { withCredentials: true });
-    const userId = response.data.id;
-    const isLoggedIn = !!userId;
-    if (!isLoggedIn && to.name !== 'login') {
+    const response = await axios.get('http://localhost:8080/api/isLoggedIn', { withCredentials: true });
+    if (!response.data.isLoggedIn && to.name !== 'login') {
       next({ name: 'login' });
     } else {
       next();

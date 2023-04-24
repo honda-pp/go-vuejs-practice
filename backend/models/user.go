@@ -7,12 +7,15 @@ import (
 )
 
 type User struct {
-	ID            int
-	Username      string
-	Email         string    `json:",omitempty"`
+	ID            int       `json:"id"`
+	Username      string    `json:"username"`
+	Email         string    `json:"email,omitempty"`
+	IsCurrentUser bool      `json:"isCurrentUser,omitempty"`
+	IsFollower    bool      `json:"isFollower,omitempty"`
+	IsFollowee    bool      `json:"isFollowee,omitempty"`
 	Password      string    `json:"-"`
 	PasswordHash  string    `json:"-"`
-	LastLoginTime time.Time `json:"-"`
+	LastLogin     time.Time `json:"lastLoginTime,omitempty"`
 }
 
 func (u *User) HashPassword() error {
