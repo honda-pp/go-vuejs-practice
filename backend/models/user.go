@@ -9,10 +9,10 @@ import (
 type User struct {
 	ID            int
 	Username      string
-	Email         string
-	Password      string
-	PasswordHash  string
-	LastLoginTime time.Time
+	Email         string    `json:",omitempty"`
+	Password      string    `json:"-"`
+	PasswordHash  string    `json:"-"`
+	LastLoginTime time.Time `json:"-"`
 }
 
 func (u *User) HashPassword() error {
