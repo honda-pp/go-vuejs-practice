@@ -81,7 +81,7 @@ func (db *DB) GetUserList() ([]*User, error) {
 	var users []*User
 	for rows.Next() {
 		user := &User{}
-		err = rows.Scan(&user.ID, &user.Username, &user.LastLoginTime)
+		err = rows.Scan(&user.ID, &user.Username, &user.LastLogin)
 		if err != nil {
 			return nil, err
 		}
